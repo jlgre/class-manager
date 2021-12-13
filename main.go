@@ -5,6 +5,7 @@ import (
 )
 
 func main() {
+	srv.Setup()
 	srv.RegisterRoutes()
 	srv.Srv()
 }

@@ -2,10 +2,11 @@ package srv
 
 import (
 	"fmt"
+	"jlgre/classManager/srv/db"
 )
 
 func Setup() {
-	fmt.Println("Setup anything")
+	db.Connect()
 }
 
 func RegisterRoutes() {

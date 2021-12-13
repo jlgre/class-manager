@@ -34,6 +34,7 @@ type Note struct {
 	ID        uint
 	Name      string
 	Markdown  string
+	ClassID   uint
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
