@@ -11,7 +11,9 @@ import (
 	"gorm.io/gorm"
 )
 
-func Connect() *gorm.DB {
+var Connection *gorm.DB
+
+func Connect() {
 	envErr := godotenv.Load()
 
 	if envErr != nil {
@@ -40,6 +42,5 @@ func Connect() *gorm.DB {
 	}
 
 	db.AutoMigrate(&models.User{}, &models.Note{}, &models.Class{})
-
-	return db
+	Connection = db
 }

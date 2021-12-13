@@ -1,18 +1,20 @@
 package srv
 
 import (
-	"fmt"
+	"jlgre/classManager/srv/controllers/user"
 	"jlgre/classManager/srv/db"
+
+	"github.com/gin-gonic/gin"
 )
 
 func Setup() {
 	db.Connect()
 }
 
-func RegisterRoutes() {
-	fmt.Println("Registered Routes")
-}
+func RegisterRoutesAndServe() {
+	router := gin.Default()
 
-func Srv() {
-	fmt.Println("Serving application")
+	router.GET("/users", user.Index)
+
+	router.Run(":8080")
 }
