@@ -17,6 +17,7 @@ func RegisterRoutesAndServe() {
 	router.GET("/users", user.Index)
 	router.GET("/user/:id", user.Get)
 	router.POST("/users", user.Create)
+	router.PUT("/user/:id", user.Update)
 	router.DELETE("/user/:id", user.Delete)
 
 	router.Run(":8080")

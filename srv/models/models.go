@@ -8,12 +8,12 @@ import (
 
 type User struct {
 	gorm.Model
-	ID           uint
-	FirstName    string    `gorm:"not null"`
-	LastName     string    `gorm:"not null"`
-	UserName     string    `gorm:"unique;not null"`
-	Password     string    `gorm:"not null"`
-	GlobalAdmin  bool      `gorm:"default:false"`
+	ID           uint      `json:"id"`
+	FirstName    string    `gorm:"not null" binding:"required" json:"first_name"`
+	LastName     string    `gorm:"not null" binding:"required" json:"last_name"`
+	UserName     string    `gorm:"unique;not null" binding:"required" json:"user_name"`
+	Password     string    `gorm:"not null" binding:"required" json:"password"`
+	GlobalAdmin  bool      `gorm:"default:false" json:"admin"`
 	Classes      []Class   `gorm:"many2many:user_classes;"`
 	AdminClasses []Class   `gorm:"many2many:user_admin_classes;"`
 	CreatedAt    time.Time `gorm:"not null"`
