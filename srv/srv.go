@@ -15,6 +15,9 @@ func RegisterRoutesAndServe() {
 	router := gin.Default()
 
 	router.GET("/users", user.Index)
+	router.GET("/user/:id", user.Get)
+	router.POST("/users", user.Create)
+	router.DELETE("/user/:id", user.Delete)
 
 	router.Run(":8080")
 }

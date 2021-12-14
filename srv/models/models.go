@@ -9,15 +9,15 @@ import (
 type User struct {
 	gorm.Model
 	ID           uint
-	FirstName    string
-	LastName     string
-	UserName     string
-	Password     string
-	GlobalAdmin  bool
-	Classes      []Class `gorm:"many2many:user_classes;"`
-	AdminClasses []Class `gorm:"many2many:user_admin_classes;"`
-	CreatedAt    time.Time
-	UpdatedAt    time.Time
+	FirstName    string    `gorm:"not null"`
+	LastName     string    `gorm:"not null"`
+	UserName     string    `gorm:"unique;not null"`
+	Password     string    `gorm:"not null"`
+	GlobalAdmin  bool      `gorm:"default:false"`
+	Classes      []Class   `gorm:"many2many:user_classes;"`
+	AdminClasses []Class   `gorm:"many2many:user_admin_classes;"`
+	CreatedAt    time.Time `gorm:"not null"`
+	UpdatedAt    time.Time `gorm:"not null"`
 }
 
 type Class struct {
