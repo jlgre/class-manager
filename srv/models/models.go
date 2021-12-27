@@ -45,10 +45,10 @@ func (cls *Class) GenCode() error {
 }
 
 type Note struct {
-	ID        uint
-	Name      string
-	Markdown  string
-	ClassID   uint
-	CreatedAt time.Time
-	UpdatedAt time.Time
+	ID        uint      `json:"id"`
+	Name      string    `gorm:"not null" binding:"required" json:"name"`
+	Markdown  string    `gorm:"not null" binding:"required" json:"markdown"`
+	ClassID   uint      `binding:"required" json:"class_id"`
+	CreatedAt time.Time `gorm:"not null"`
+	UpdatedAt time.Time `gorm:"not null"`
 }
