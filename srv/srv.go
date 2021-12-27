@@ -1,6 +1,7 @@
 package srv
 
 import (
+	"jlgre/classManager/srv/controllers/class"
 	"jlgre/classManager/srv/controllers/user"
 	"jlgre/classManager/srv/db"
 
@@ -19,6 +20,12 @@ func RegisterRoutesAndServe() {
 	router.POST("/users", user.Create)
 	router.PUT("/user/:id", user.Update)
 	router.DELETE("/user/:id", user.Delete)
+
+	router.GET("/classes", class.Index)
+	router.GET("/class/:id", class.Get)
+	router.POST("/classes", class.Create)
+	router.PUT("/class/:id", class.Update)
+	router.DELETE("/class/:id", class.Delete)
 
 	router.Run(":8080")
 }
