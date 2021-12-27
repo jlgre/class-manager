@@ -1,6 +1,8 @@
 package models
 
 import (
+	"crypto/rand"
+	"fmt"
 	"time"
 
 	"gorm.io/gorm"
@@ -22,12 +24,24 @@ type User struct {
 
 type Class struct {
 	gorm.Model
-	ID        uint
-	Name      string
-	Code      string
+	ID        uint   `json:"id"`
+	Name      string `gorm:"not null" binding:"required" json:"name"`
+	Code      string `gorm:"unqiue;not null" json:"code"`
 	Notes     []Note
-	CreatedAt time.Time
-	UpdatedAt time.Time
+	CreatedAt time.Time `gorm:"not null"`
+	UpdatedAt time.Time `gorm:"not null"`
+}
+
+func (cls *Class) GenCode() error {
+	bytes := make([]byte, 3)
+
+	_, err := rand.Read(bytes)
+
+	s := fmt.Sprintf("%X", bytes)
+
+	cls.Code = s
+
+	return err
 }
 
 type Note struct {

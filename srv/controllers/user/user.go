@@ -5,7 +5,6 @@ import (
 	"jlgre/classManager/srv/hash"
 	"jlgre/classManager/srv/models"
 
-	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -16,7 +15,8 @@ func Index(context *gin.Context) {
 	err := db.Connection.Find(&users).Error
 
 	if err != nil {
-		log.Fatal(err)
+		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
 	}
 
 	context.JSON(http.StatusOK, gin.H{
@@ -44,7 +44,7 @@ func Create(context *gin.Context) {
 	result := db.Connection.Create(&user)
 
 	if result.Error != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": result.Error})
+		context.JSON(http.StatusBadRequest, gin.H{"error": result.Error.Error()})
 	} else {
 		context.JSON(http.StatusCreated, user)
 	}
@@ -56,7 +56,7 @@ func Get(context *gin.Context) {
 	result := db.Connection.First(&user, context.Param("id"))
 
 	if result.Error != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": result.Error})
+		context.JSON(http.StatusBadRequest, gin.H{"error": result.Error.Error()})
 	} else {
 		context.JSON(http.StatusOK, user)
 	}
@@ -91,7 +91,7 @@ func Update(context *gin.Context) {
 			result := db.Connection.Save(&user)
 
 			if result.Error != nil {
-				context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+				context.JSON(http.StatusInternalServerError, gin.H{"error": result.Error.Error()})
 			} else {
 				context.JSON(http.StatusOK, user)
 			}
@@ -103,7 +103,7 @@ func Delete(context *gin.Context) {
 	result := db.Connection.Delete(&models.User{}, context.Param("id"))
 
 	if result.Error != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": result.Error})
+		context.JSON(http.StatusBadRequest, gin.H{"error": result.Error.Error()})
 	} else {
 		context.Status(http.StatusNoContent)
 	}
