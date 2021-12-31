@@ -5,6 +5,7 @@ import (
 	"jlgre/classManager/srv/controllers/note"
 	"jlgre/classManager/srv/controllers/user"
 	"jlgre/classManager/srv/db"
+	"os"
 
 	"github.com/gin-gonic/gin"
 )
@@ -34,5 +35,5 @@ func RegisterRoutesAndServe() {
 	router.PUT("/note/:id", note.Update)
 	router.DELETE("/note/:id", note.Delete)
 
-	router.Run(":8080")
+	router.Run(os.Getenv("API_PORT"))
 }
