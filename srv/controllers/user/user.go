@@ -63,6 +63,8 @@ func Get(context *gin.Context) {
 }
 
 func Update(context *gin.Context) {
+	// todo interact with user update more cleanly
+	// figure out nice way to manage password updates
 	var user models.User
 
 	result := db.Connection.First(&user, context.Param("id"))
