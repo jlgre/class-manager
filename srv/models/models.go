@@ -4,13 +4,10 @@ import (
 	"crypto/rand"
 	"fmt"
 	"time"
-
-	"gorm.io/gorm"
 )
 
 type User struct {
-	gorm.Model
-	ID           uint      `json:"id"`
+	ID           uint      `gorm:"primary_key" json:"id"`
 	FirstName    string    `gorm:"not null" binding:"required" json:"first_name"`
 	LastName     string    `gorm:"not null" binding:"required" json:"last_name"`
 	UserName     string    `gorm:"unique;not null" binding:"required" json:"user_name"`
@@ -23,8 +20,7 @@ type User struct {
 }
 
 type Class struct {
-	gorm.Model
-	ID        uint   `json:"id"`
+	ID        uint   `gorm:"primary_key" json:"id"`
 	Name      string `gorm:"not null" binding:"required" json:"name"`
 	Code      string `gorm:"unqiue;not null" json:"code"`
 	Notes     []Note
@@ -45,7 +41,7 @@ func (cls *Class) GenCode() error {
 }
 
 type Note struct {
-	ID        uint      `json:"id"`
+	ID        uint      `gorm:"primary_key" json:"id"`
 	Name      string    `gorm:"not null" binding:"required" json:"name"`
 	Markdown  string    `gorm:"not null" binding:"required" json:"markdown"`
 	ClassID   uint      `binding:"required" json:"class_id"`
