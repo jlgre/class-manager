@@ -110,3 +110,45 @@ func Delete(context *gin.Context) {
 		context.Status(http.StatusNoContent)
 	}
 }
+
+func Enroll(context *gin.Context) {
+	var user models.User
+	var class models.Class
+
+	user_id := context.Param("id")
+	class_code := context.Param("code")
+
+	userResult := db.Connection.First(&user, user_id)
+	classResult := db.Connection.Where("code = ?", class_code).First(&class)
+
+	if userResult.Error != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"user_error": userResult.Error.Error()})
+	} else if classResult.Error != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"class_error": classResult.Error.Error()})
+	} else {
+		err := db.Connection.Model(&user).Association("Classes").Append(&class)
+		if err != nil {
+			context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		} else {
+			context.Status(http.StatusNoContent)
+		}
+	}
+}
+
+func Classes(context *gin.Context) {
+	var user models.User
+	var classes []models.Class
+
+	userResult := db.Connection.First(&user, context.Param("id"))
+
+	if userResult.Error != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": userResult.Error.Error()})
+	} else {
+		err := db.Connection.Model(&user).Association("Classes").Find(&classes)
+		if err != nil {
+			context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		} else {
+			context.JSON(http.StatusOK, classes)
+		}
+	}
+}

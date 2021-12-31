@@ -35,5 +35,8 @@ func RegisterRoutesAndServe() {
 	router.PUT("/note/:id", note.Update)
 	router.DELETE("/note/:id", note.Delete)
 
+	router.PATCH("/user/:id/class/:code", user.Enroll)
+	router.GET("/user/:id/classes", user.Classes)
+
 	router.Run(os.Getenv("API_PORT"))
 }
